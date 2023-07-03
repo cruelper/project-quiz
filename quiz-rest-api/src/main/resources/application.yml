@@ -1,0 +1,26 @@
+server:
+  port: 8080
+
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://postgres:5432/quizdb
+    username: admin
+    password: admin
+  liquibase:
+    url: jdbc:postgresql://postgres:5432/quizdb
+    user: admin
+    password: admin
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+
+jwt:
+  encoder:
+    secret: dJvoYnfoe-238fk3oD+cie#$kfvkdkf8&
+    iteration: 8
+    keyLength: 256
+  secret: dJvoYnfoe-238fk3oD+cie#$kfvkdkf8&
+  expirationInMS: 10000000000
+  issuer: quizRestApiService

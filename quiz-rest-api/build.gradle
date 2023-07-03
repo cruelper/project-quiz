@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version "$springBootVersion"
+    id 'io.spring.dependency-management' version "$springDependencyManagementVersion"
+}
+
+group = 'ru.nuykin'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-webflux:$springBootStarterWebFlux"
+
+    implementation "org.springframework.boot:spring-boot-starter-security:$springBootStarterSecurityVersion"
+    implementation "io.jsonwebtoken:jjwt:$jjwnVersion"
+    implementation "javax.xml.bind:jaxb-api:$jaxbApiVersion"
+    implementation "org.springframework.session:spring-session-core:$springSessionCoreVersion"
+
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:"
+    implementation "org.springframework.boot:spring-boot-starter-data-r2dbc:$springBootStarterDataR2DBCVersion"
+    implementation "org.liquibase:liquibase-core:$liquibaseVersion"
+    implementation "org.postgresql:postgresql:$JDBCPostgreSQLDriverVersion"
+    runtimeOnly "io.r2dbc:r2dbc-postgresql:$R2DBCPostgreSQLDriverVersion"
+
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+
+    implementation "org.mapstruct:mapstruct:$mapStructVersion"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapStructVersion"
+
+    developmentOnly "org.springframework.boot:spring-boot-devtools:$springBootDebToolsVersion"
+    implementation "com.google.code.findbugs:jsr305:$googleFindBugsVersion"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test:$springBootStarterTestVersion"
+    testImplementation "io.projectreactor:reactor-test:$reactorTestVersion"
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
