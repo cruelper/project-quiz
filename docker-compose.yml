@@ -15,6 +15,16 @@ services:
     networks:
       - quiznet
 
+  redis:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6389:6389'
+    volumes: 
+      - ./redis/data:/data
+    networks:
+      - quiznet
+
   quiz-rest-api:
     build:
       context: ./quiz-rest-api
@@ -28,6 +38,7 @@ services:
       decode_log_event_to_json_object: "true"
     depends_on:
       - postgres
+      - redis
     networks:
       - quiznet
 
