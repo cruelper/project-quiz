@@ -8,7 +8,9 @@ import org.springframework.web.reactive.config.EnableWebFlux;
 import reactivefeign.spring.config.EnableReactiveFeignClients;
 
 @EnableR2dbcRepositories
+@EnableAspectJAutoProxy
 @EnableWebFlux
+@EnableReactiveFeignClients
 @SpringBootApplication
 public class QuizRestApiApplication {
 
