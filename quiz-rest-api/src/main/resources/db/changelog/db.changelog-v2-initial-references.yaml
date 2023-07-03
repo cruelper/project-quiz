@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: addInitialForeignKeyConstraints
+      author: andrey-nuykin
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: quiz_question
+            baseColumnNames: category_id
+            referencedTableName: quiz_category
+            referencedColumnNames: id
+            constraintName: quiz_question_category_fk

@@ -1,0 +1,38 @@
+version: "3.5"
+services:
+
+  postgres:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=quizdb
+    ports:
+      - '5432:5432'
+    volumes: 
+      - ./postgres/data:/var/lib/postgresql/data
+    networks:
+      - quiznet
+
+  quiz-rest-api:
+    build:
+      context: ./quiz-rest-api
+      dockerfile: Dockerfile
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    ports:
+      - 8080:8080
+    labels:
+      collect_logs_with_filebeat: "true"
+      decode_log_event_to_json_object: "true"
+    depends_on:
+      - postgres
+    networks:
+      - quiznet
+
+networks:
+  quiznet:
+    driver: bridge
+
+    
