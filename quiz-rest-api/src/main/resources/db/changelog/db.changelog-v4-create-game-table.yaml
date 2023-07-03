@@ -1,0 +1,78 @@
+databaseChangeLog:
+  - changeSet:
+      id: createGameTable
+      author: andrey-nuykin
+      changes:
+        - createTable:
+            tableName: game
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: user_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: start_time
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: end_time
+                  type: timestamp
+        - addForeignKeyConstraint:
+            baseTableName: game
+            baseColumnNames: user_id
+            referencedTableName: userss
+            referencedColumnNames: id
+            constraintName: game_user_fk
+        - createTable:
+            tableName: game_question
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: game_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: question_number
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: question_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: question_source
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_correct_answer
+                  type: bool
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_answer_given
+                  type: bool
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: game_question
+            baseColumnNames: game_id
+            referencedTableName: game
+            referencedColumnNames: id
+            constraintName: question_game_fk
