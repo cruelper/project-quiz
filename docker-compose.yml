@@ -1,6 +1,55 @@
 version: "3.5"
 services:
 
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.1-arm64
+    ports:
+      - "9200:9200"
+    environment:
+      - "discovery.type=single-node"
+      - xpack.security.enabled=false
+    volumes:
+      - ./elasticsearch/data:/usr/share/elasticsearch/data:rw
+    networks:
+      - quiznet
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.8.1-arm64
+    ports:
+      - "25826:25826"
+      - "5044:5044"
+    volumes:
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+    restart: on-failure
+    depends_on:
+      - elasticsearch
+    networks:
+      - quiznet
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.8.1-arm64
+    ports:
+      - "5601:5601"
+    restart: on-failure
+    depends_on:
+      - elasticsearch
+    networks:
+      - quiznet
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.8.1-arm64
+    volumes:
+      - ./filebeat/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./filebeat/data:/usr/share/filebeat/data:rw
+    user: root
+    restart: on-failure
+    depends_on:
+      - logstash
+    networks:
+      - quiznet
+
   postgres:
     image: postgres:14.1-alpine
     restart: always
