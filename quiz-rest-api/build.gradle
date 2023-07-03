@@ -35,6 +35,10 @@ dependencies {
     implementation "org.postgresql:postgresql:$JDBCPostgreSQLDriverVersion"
     runtimeOnly "io.r2dbc:r2dbc-postgresql:$R2DBCPostgreSQLDriverVersion"
 
+    implementation "org.springframework.boot:spring-boot-starter-data-redis-reactive:$springBootStarterDataRedis"
+    implementation "com.google.code.gson:gson:$GsonVersion"
+
+
     compileOnly "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 

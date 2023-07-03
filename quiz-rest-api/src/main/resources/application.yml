@@ -15,6 +15,10 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: none
+  data:
+    redis:
+      host: redis
+      port: 6389
 
 jwt:
   encoder:
